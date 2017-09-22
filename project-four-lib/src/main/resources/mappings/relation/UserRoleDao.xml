@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pf.dao.relation.UserRoleDao">
+	<resultMap type="com.jianfei.pf.entity.relation.UserRole" id="roleMap">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="roleId" column="role_id"/>
+		<collection column="role_id" property="roles" ofType="string" select="findRoleByRoleId"></collection>
+	</resultMap>
+	
+	<resultMap type="com.jianfei.pf.entity.relation.UserRole" id="userMap">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="roleId" column="role_id"/>
+		<collection column="user_id" property="users" ofType="string" select="findUserByUserId"></collection>
+	</resultMap>
+	
+	<delete id="delete">
+		delete from sys_user_role where user_id = #{userId}
+	</delete>
+	
+	<select id="findById" resultType="com.jianfei.pf.entity.relation.UserRole">
+		select * from sys_user_role where user_id = #{userId}
+	</select>
+	
+	<!-- 用户jsp查询角色 -->
+	<select id="findAllRoleId" resultType="com.jianfei.pf.entity.relation.UserRole" resultMap="roleMap">
+		select * from sys_user_role order by id asc
+	</select>
+	
+	<!-- roleMap -->
+	<select id="findRoleByRoleId" resultType="string">
+		select r.role_name from sys_roles r where r.id = #{role_id}
+	</select>
+	
+	<!-- 角色jsp查询用户 -->
+	<select id="findAllUserId" resultType="com.jianfei.pf.entity.relation.UserRole" resultMap="userMap">
+		select * from sys_user_role order by id asc
+	</select>
+	
+	<!-- userMap -->
+	<select id="findUserByUserId" resultType="string">
+		select u.nickname from sys_users u where u.id = #{user_id}
+	</select>
+</mapper>

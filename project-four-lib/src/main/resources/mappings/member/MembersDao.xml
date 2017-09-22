@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pf.dao.member.MembersDao">
+	<insert id="insertMembers">
+		insert into mem_members (account,password) values (#{0},#{1})
+	</insert>
+	
+	<update id="update">
+		update mem_members set 
+		username = #{username},
+		email = #{email},
+		gender = #{gender},
+		age = #{age},
+		birthday = #{birthday},
+		address = #{address},
+		status = #{status}
+		where id = #{id}
+	</update>
+	
+	<select id="findById" resultType="com.jianfei.pf.entity.member.Members">
+		select * from mem_members where id = #{id}
+	</select>
+	
+	<select id="findMembersByAccount" resultType="com.jianfei.pf.entity.member.Members">
+		select * from mem_members where account = #{0} and password = #{1} and status = 0
+	</select>
+	
+	<select id="findAll" resultType="com.jianfei.pf.entity.member.Members">
+		select * from mem_members
+	</select>
+	
+	<select id="findCondition" resultType="com.jianfei.pf.entity.member.Members">
+		select * from mem_members m
+	    where 1=1
+	   	<if test="null != account and '' != account">and m.account like CONCAT('%',#{account},'%')</if>
+	    <if test="null != email and '' != email">and m.email like CONCAT('%',#{email},'%') </if>
+	   	order by m.id asc 
+	   	limit #{pn},#{ps}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from mem_members
+	</select>
+	
+	<!-- 条件查询数据的总数 -->
+	<select id="findCountByT" resultType="int">
+		select count(*)
+	    from mem_members m
+	    where 1=1
+	   	<if test="null != account and '' != account">and m.account like CONCAT('%',#{account},'%')</if>
+	    <if test="null != email and '' != email">and m.email like CONCAT('%',#{email},'%') </if>
+	   	order by m.id asc
+	</select>
+</mapper>

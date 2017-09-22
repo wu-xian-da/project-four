@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pf.dao.forum.NotesDao">
+	
+	<insert id="insert">
+		insert into for_notes (theme,parent_modules,childs_modules,content,members_id) values 
+		(#{theme},#{parentmodules},#{childsmodules},#{content},#{membersId})
+	</insert>
+	
+	<update id="update">
+		update for_notes set 
+		theme = #{theme},
+		parent_modules = #{parentmodules},
+		childs_modules = #{childsmodules},
+		content = #{content},
+		status = #{status},
+		releasetime = #{releasetime}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from for_notes where id = #{id}
+	</delete>
+	
+	<select id="findById" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes where id = #{id}
+	</select>
+	
+	<select id="findAll" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes where status = 1
+	</select>
+	
+	<select id="findNotesByMembersId" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes where  members_id = #{memberId} and status = 1
+	</select>
+	
+	<select id="findNotesStatusYFBByMembersId" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes n where 1=1 and members_id = #{0} and status = 1 limit #{1},#{2}
+	</select>
+	
+	<select id="findCountStatusYFBBymembersId" resultType="int">
+		select count(*) from for_notes n where 1=1 and members_id = #{membersId} and status = 1
+	</select>
+	
+	<select id="findAllMemberNotesByMembersId" resultType="com.jianfei.pf.entity.forum.Notes">
+		SELECT * FROM for_notes n WHERE 1=1 and n.members_id = #{0} limit #{1},#{2} 
+	</select>
+	
+	<select id="findCountBymembersId" resultType="int">
+		SELECT count(*) FROM for_notes n WHERE n.members_id = #{membersId}
+	</select>
+	
+	<select id="findNotesByChildsModules" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes where 1=1 and childs_modules = #{0} and status = 1 
+		limit #{1},#{2}
+	</select>
+	
+	
+	<select id="findCountByParentModules" resultType="int">
+		SELECT count(*) FROM for_notes n WHERE n.parent_modules = #{parentmodules} and status = 1
+	</select>
+	
+	<select id="findNotesByParentModules" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes where 1=1 and parent_modules = #{0} and status = 1 
+		limit #{1},#{2}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCountBychildsmodules" resultType="int">
+		select count(*) from for_notes where childs_modules = #{childsmodules} and status = 1
+	</select>
+	
+	<select id="findCondition" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes a
+	    where 1=1
+	    <if test="null != theme and theme != ''">and a.theme like CONCAT('%',#{theme},'%')</if>
+	    <if test="0 != membersId">and a.members_id like CONCAT('%',#{membersId},'%')</if>
+        <if test="0 != parentmodules">and a.parent_modules like CONCAT('%',#{parentmodules},'%') </if>
+        <if test="0 != childsmodules">and a.childs_modules like CONCAT('%',#{childsmodules},'%') </if>
+        <if test="null != beginCreateTime and beginCreateTime != ''">and DATE_FORMAT(a.releasetime, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
+        <if test="null != endCreateTime and endCreateTime != ''">and DATE_FORMAT(a.releasetime, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
+    	order by a.id asc
+    	limit #{pn},#{ps}
+	</select>
+	
+	<select id="findCountByT" resultType="int">
+		select count(*) from for_notes a
+	    where 1=1
+	    <if test="null != theme and theme != ''">and a.theme like CONCAT('%',#{theme},'%')</if>
+	    <if test="0 != membersId">and a.members_id like CONCAT('%',#{membersId},'%')</if>
+        <if test="0 != parentmodules">and a.parent_modules like CONCAT('%',#{parentmodules},'%') </if>
+        <if test="0 != childsmodules">and a.childs_modules like CONCAT('%',#{childsmodules},'%') </if>
+        <if test="null != beginCreateTime and beginCreateTime != ''">and DATE_FORMAT(a.releasetime, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
+        <if test="null != endCreateTime and endCreateTime != ''">and DATE_FORMAT(a.releasetime, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
+    	order by a.id asc
+	</select>
+	
+	<select id="findConditionByStatus" resultType="com.jianfei.pf.entity.forum.Notes">
+		select * from for_notes a
+	    where 1=1 and status = 1
+    	order by a.id asc
+    	limit #{pn},#{ps}
+	</select>
+	
+	<!-- 根据文章的状态YFB查询数据条数 -->
+	<select id="findCountByStatus" resultType="int">
+		select count(*) from for_notes where status = 1
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from for_notes
+	</select>
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pf.dao.system.UsersDao">
+	
+	<sql id="userColumns">
+		a.id id,
+		a.username username,
+		a.password password,
+		a.nickname nickname,
+		a.gender gender,
+		a.age age,
+		a.create_time createTime,
+		a.login_time loginTime,
+		a.ip ip
+	</sql>
+	
+	<!-- 添加用户 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_users (username,password,nickname,gender,age,create_time)
+		values (#{username},#{password},#{nickname},#{gender},#{age},#{createTime})
+	</insert>
+	
+	<!-- 用户与角色关联 -->
+	<insert id="insertUserRoleId">
+		insert into sys_user_role (user_id,role_id) values (#{0},#{1})
+	</insert>
+	
+	<!-- 登录修改登录时间及IP -->
+	<update id="updateLoginTimeAndIp">
+		update sys_users a set a.login_time = #{loginTime},a.ip = #{ip} where a.id = #{id}
+	</update>
+	
+	<!-- 修改用户 -->
+	<update id="update">
+		update sys_users set 
+		username = #{username},
+		password = #{password},
+		nickname = #{nickname},
+		gender = #{gender},
+		age = #{age}
+		where id = #{id}
+	</update>
+	
+	<!-- 删除用户 -->
+	<delete id="delete">
+		delete from sys_users where id = #{id}
+	</delete>
+	
+	<!-- 查询所有用户 -->
+	<select id="findAll" resultType="com.jianfei.pf.entity.system.Users">
+		SELECT <include refid="userColumns"></include>
+		FROM sys_users a
+		ORDER BY a.id asc
+	</select>
+	
+	<!-- 根据ID查询用户 -->
+	<select id="findById" resultType="com.jianfei.pf.entity.system.Users" parameterType="java.lang.Integer">
+		SELECT <include refid="userColumns"></include>
+		FROM sys_users a WHERE a.id = #{id}
+	</select>
+	
+	<!-- 根据昵称查询 -->
+	<select id="findUsersByNickname" resultType="com.jianfei.pf.entity.system.Users" >
+		SELECT <include refid="userColumns"></include>
+		FROM sys_users a WHERE a.nickname = #{nickname}
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="findCondition" resultType="com.jianfei.pf.entity.system.Users">
+		select <include refid="userColumns"/>
+	    from sys_users a
+	    where 1=1
+    	<if test="null != username and '' != username">and a.username like CONCAT('%',#{username},'%')</if>
+	    <if test="null != nickname and '' != nickname">and a.nickname like CONCAT('%',#{nickname},'%') </if>
+        <if test="null != gender">and a.gender = #{gender}</if>
+        <if test="null != beginCreateTime and '' != beginCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
+        <if test="null != endCreateTime and '' != endCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
+    	order by a.id asc , a.gender asc
+    	limit #{pn},#{ps}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from sys_users
+	</select>
+	
+	<!-- 条件查询数据的总数 -->
+	<select id="findCountByT" resultType="int">
+		select count(*)
+	    from sys_users a
+	    where 1=1
+    	<if test="null != username and '' != username">and a.username like CONCAT('%',#{username},'%')</if>
+	    <if test="null != nickname and '' != nickname">and a.nickname like CONCAT('%',#{nickname},'%') </if>
+        <if test="null != gender">and a.gender = #{gender}</if>
+        <if test="null != beginCreateTime and '' != beginCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[>=]]> #{beginCreateTime}</if>
+        <if test="null != endCreateTime and '' != endCreateTime">and DATE_FORMAT(a.create_time, '%Y-%m-%d')  <![CDATA[<=]]> #{endCreateTime}</if>
+    	order by a.id asc , a.gender asc
+	</select>
+</mapper>

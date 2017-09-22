@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pf.dao.system.RolesDao">
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_roles (role_name,counts) values (#{rolename},#{counts})
+	</insert>
+	
+	<!-- 添加角色与权限的关系 -->
+	<insert id="insertRoleMenu">
+		<!-- insert into sys_role_menu (role_id,title_id,menu_id,button_id) values (#{0},#{1},#{2},#{3}) -->
+		insert into sys_role_menu (role_id,menus_id) values (#{0},#{1})
+	</insert>
+	
+	<update id="update">
+		update sys_roles set 
+		role_name = #{rolename},
+		counts = #{counts} 
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sys_roles where id = #{id}
+	</delete>
+	
+	<select id="findById" resultType="com.jianfei.pf.entity.system.Roles">
+		select * from sys_roles where id = #{id}
+	</select>
+	
+	<select id="findAll" resultType="com.jianfei.pf.entity.system.Roles">
+		select * from sys_roles r
+		ORDER BY r.id asc
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="findCondition" resultType="com.jianfei.pf.entity.system.Roles">
+		select * from sys_roles r 
+		where 1=1
+		<if test="rolename != null and rolename != '' ">and r.role_name like CONCAT ('%',#{rolename},'%')</if>
+		ORDER BY r.id asc
+		limit #{pn},#{ps}
+	</select>
+	
+	<!-- 根据角色名称查询Roles -->
+	<select id="findRolesByRolename" resultType="com.jianfei.pf.entity.system.Roles">
+		select * from sys_roles where role_name = #{rolename}
+	</select>
+	
+	<!-- 查询数据条数 -->
+	<select id="findCount" resultType="int">
+		select count(*) from sys_roles
+	</select> 
+	
+	<select id="findCountByT" resultType="int">
+		select count(*) from sys_roles r 
+		where 1=1
+		<if test="rolename != null and rolename != '' ">and r.role_name like CONCAT ('%',#{rolename},'%')</if>
+		ORDER BY r.id asc
+	</select>
+</mapper>

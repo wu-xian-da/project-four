@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!-- 配置数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc.url}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="0"></property>
+		
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="20"></property>
+		
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="0"></property>
+		
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="60000"></property>
+		<property name="poolPreparedStatements" value="true"></property> 
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="33"></property>
+		
+		<!-- 检测有效sql -->
+		<property name="validationQuery" value="${validationQuery}"></property>
+		<property name="testOnBorrow" value="false"></property>
+		<property name="testOnReturn" value="false"></property>
+		<property name="testWhileIdle" value="true"></property>
+		
+		<!-- 配置间隔多久会进行一次检测,检测时需要关闭空闲连接 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		
+		<!-- 配置一个连接在连接池中的最小生存时间 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000"></property>
+		
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true"></property>
+		<property name="removeAbandonedTimeout" value="1800"></property>
+		
+		<!-- abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true"></property>
+		
+		<!-- 监控数据库 -->
+		<property name="filters" value="mergeStat"></property>
+	</bean>
+	
+	<!-- mybatis文件 -->
+	<bean id="sqlSessionFactory" class="com.jianfei.pf.tools.mybatis.MySqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:mappings/**/*.xml"></property>
+		<property name="configLocation" value="classpath:config/config.xml"></property>
+		<property name="typeAliasesPackage" value="com.jianfei.pf.entity"></property>
+		<property name="enumBasePackage" value="com.jianfei.pf.entity.common"></property>
+	</bean>
+	
+	<!--  -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jianfei.pf.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 拦截器方式配置事务 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- spring aop 事务管理 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.jianfei.pf.service..*Service.*(..))" id="appService"/>
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="appService"/>
+	</aop:config>
+	
+</beans>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianfei.pf.dao.system.LogLoginDao">
+
+	<insert id="insert">
+		insert into sys_loglogin (login_name,date,userAgent,ip,status) values (#{loginname},#{date},#{userAgent},#{ip},#{status})
+	</insert>
+	<!-- 条件,分页,查询 -->
+	<select id="findCondition" resultType="com.jianfei.pf.entity.system.LogLogin">
+		select *
+	    from sys_loglogin l
+	    where 1=1
+	   	<if test="null != loginname and '' != loginname">and l.login_name like CONCAT('%',#{loginname},'%')</if>
+	    <if test="null != ip and '' != ip">and l.ip like CONCAT('%',#{ip},'%') </if>
+	   	order by l.id desc 
+	   	limit #{pn},#{ps}
+	</select>
+	
+	<select id="findCount" resultType="int">
+		select count(*) from sys_loglogin
+	</select>
+	
+	<select id="findCountByT" resultType="int">
+		select count(*)
+	    from sys_loglogin l
+	    where 1=1
+	   	<if test="null != loginname and '' != loginname">and l.login_name like CONCAT('%',#{loginname},'%')</if>
+	    <if test="null != ip and '' != ip">and l.ip like CONCAT('%',#{ip},'%') </if>
+	   	order by l.id desc
+	</select>
+</mapper>

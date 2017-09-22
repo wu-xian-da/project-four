@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+  <display-name>project-three</display-name>
+  
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:spring/spring-context.xml,classpath:spring/spring-mybatis.xml</param-value>
+  </context-param>
+  
+  <filter>
+  	<filter-name>encodingFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>forceEncoding</param-name>
+  		<param-value>true</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>encodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- spring监听器 -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!-- 防止Spring内存溢出监听器 -->
+  <listener>
+  	<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  
+  <servlet>
+  	<servlet-name>springServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:spring/spring-mvc.xml</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>springServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <session-config>
+  	<session-timeout>30</session-timeout>
+  </session-config>
+  
+  	<!-- 配置对静态资源的处理 -->  
+    <servlet-mapping>  
+        <servlet-name>default</servlet-name>  
+        <url-pattern>/resources/*</url-pattern>  
+    </servlet-mapping>
+    
+    <!-- 左侧导航静态资源访问 -->
+    <servlet>
+   		<servlet-name>gotoleft</servlet-name>
+  		<jsp-file>/WEB-INF/views/jsp/sys_left.jsp</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>gotoleft</servlet-name>
+   		<url-pattern>/sys_left</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+   		<servlet-name>gotobg</servlet-name>
+  		<jsp-file>/WEB-INF/views/jsp/b_g.jsp</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>gotobg</servlet-name>
+   		<url-pattern>/b_g</url-pattern>
+  	</servlet-mapping>
+  	
+  	
+  	<servlet>
+   		<servlet-name>gopage</servlet-name>
+  		<jsp-file>/WEB-INF/views/include/page.jsp</jsp-file>
+ 	</servlet>
+  	<servlet-mapping>
+   		<servlet-name>gopage</servlet-name>
+   		<url-pattern>/page</url-pattern>
+  	</servlet-mapping>
+</web-app>
