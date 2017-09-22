@@ -9,7 +9,7 @@
 
 	<tag>
 		<name>power</name>
-		<tag-class>com.jianfei.pt.common.TMBSelect</tag-class>
+		<tag-class>com.jianfei.pf.common.TMBSelect</tag-class>
 		<body-content>JSP</body-content><!--这里如果设为empty,则无body 自定义标签是否有标签体内容(empty:没有,JSP:有)-->
 		<attribute>
 			<name>target</name>

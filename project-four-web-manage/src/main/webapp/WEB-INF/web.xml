@@ -80,14 +80,5 @@
    		<servlet-name>gotobg</servlet-name>
    		<url-pattern>/b_g</url-pattern>
   	</servlet-mapping>
-  	
-  	
-  	<servlet>
-   		<servlet-name>gopage</servlet-name>
-  		<jsp-file>/WEB-INF/views/include/page.jsp</jsp-file>
- 	</servlet>
-  	<servlet-mapping>
-   		<servlet-name>gopage</servlet-name>
-   		<url-pattern>/page</url-pattern>
-  	</servlet-mapping>
+
 </web-app>

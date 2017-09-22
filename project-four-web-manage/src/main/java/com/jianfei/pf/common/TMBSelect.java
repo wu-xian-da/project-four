@@ -50,7 +50,7 @@ public class TMBSelect extends BodyTagSupport{
 	public void findbuttons(HttpServletRequest request,Model model){
 		List<String> list = new ArrayList<String>();
 		
-		List<RoleMenu> rm = this.roleMenuService.findTMBMenusByRoles(Integer.parseInt(request.getParameter("roleId")));
+		List<RoleMenu> rm = this.roleMenuService.findTMBMenusByRoles(Integer.parseInt((String) request.getSession().getAttribute("roleId")));
 			Iterator<RoleMenu> it = rm.iterator();
 			while (it.hasNext()) {
 				RoleMenu roleMenu = (RoleMenu) it.next();

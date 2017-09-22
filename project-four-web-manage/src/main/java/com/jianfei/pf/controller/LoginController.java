@@ -72,7 +72,7 @@ public class LoginController {
 				 *	
 				 */
 				request.getSession().setAttribute("usernickname", users.getNickname());
-				
+				request.getSession().setAttribute("roleId", String.valueOf(userRole.getRoleId()));
 				//查询菜单
 				tmbSelect.findtmbname(request,userRole);
 				
