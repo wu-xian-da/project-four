@@ -53,7 +53,7 @@
 </body>
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/ueditor.all.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/js/jquery-2.0.0.js"></script>
 <script type="text/javascript">
    var editor = UE.getEditor('editor');

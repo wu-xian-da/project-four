@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.baidu.ueditor.ActionEnter;
 
 @Controller
-
+@RequestMapping("/forum/notes")
 public class InitUeditorController {
 
 	private Logger logger = Logger.getLogger(InitUeditorController.class);
@@ -32,6 +32,7 @@ public class InitUeditorController {
 		PrintWriter writer = null;
 		try {
 			String exec = new ActionEnter(request,rootPath).exec();
+			System.out.println(exec+"===========");
 			writer = response.getWriter();
 			writer.write(exec);
 			writer.flush();
