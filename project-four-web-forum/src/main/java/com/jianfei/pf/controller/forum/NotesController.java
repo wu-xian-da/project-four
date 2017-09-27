@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jianfei.pf.controller.common.PageController;
-import com.jianfei.pf.controller.common.TMBSelect;
+import com.jianfei.pf.common.PageController;
+import com.jianfei.pf.common.TMBSelect;
 import com.jianfei.pf.entity.common.NoteStatus;
 import com.jianfei.pf.entity.forum.Modules;
 import com.jianfei.pf.entity.forum.Notes;
@@ -51,6 +51,7 @@ public class NotesController {
 		model.addAttribute("modulesall",modulesService.findAll());
 		model.addAttribute("allmembers",membersService.findAll());
 		model.addAttribute("allmodules",modulesService.findAll());
+		
 	}
 	
 	/**
@@ -59,9 +60,15 @@ public class NotesController {
 	 * @return
 	 */
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
-	public String Forminsert(Model model){
-		this.setModel(model);
-		return "forum/notes/form";
+	public String Forminsert(Model model,HttpServletRequest request){
+		String loginStatus = (String) request.getSession().getAttribute("loginStatus");
+		if (loginStatus == "success") {
+			this.setModel(model);
+			return "forum/notes/form";
+		} else {
+			return "fail";
+		}
+		
 	}
 	
 	/***
@@ -138,16 +145,23 @@ public class NotesController {
 	 * @return
 	 */
 	@RequestMapping(value="/{membersId}",method=RequestMethod.GET)
-	public String list(@PathVariable("membersId")int membersId,Model model,Notes notes){
-		//页面传输的pn,ps
-		pageController.setPNPS(model,notes);
+	public String list(@PathVariable("membersId")int membersId,Model model,Notes notes,HttpServletRequest request){
+		String loginStatus = (String) request.getSession().getAttribute("loginStatus");
+		if (loginStatus == "success") {
+			//页面传输的pn,ps
+			pageController.setPNPS(model,notes);
+			
+			//查询总记录条数
+			int totalRecord = notesService.findCountBymembersId(membersId);
+			pageController.findPage(model,notes,totalRecord);
+			model.addAttribute("membersallnotes",notesService.findAllMemberNotesByMembersId(membersId,notes.getPn(),notes.getPs()));
+			this.setModel(model);
+			
+			return "forum/notes/list";
+		} else {
+			return "fail";
+		}
 		
-		//查询总记录条数
-		int totalRecord = notesService.findCountBymembersId(membersId);
-		pageController.findPage(model,notes,totalRecord);
-		model.addAttribute("membersallnotes",notesService.findAllMemberNotesByMembersId(membersId,notes.getPn(),notes.getPs()));
-		this.setModel(model);
-		return "forum/notes/list";
 	}
 	
 	/***
@@ -211,6 +225,8 @@ public class NotesController {
 		this.setModel(model);
 		return "jsp/forumlist";
 	}
+	
+	
 	
 	/***
 	 * 二级联动

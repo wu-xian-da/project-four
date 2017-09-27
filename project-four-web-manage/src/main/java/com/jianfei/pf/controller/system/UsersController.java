@@ -8,6 +8,7 @@ package com.jianfei.pf.controller.system;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -159,5 +160,16 @@ public class UsersController{
 		tmbSelect.findbuttons(request, model);
 		
 		return "system/users/list";
+	}
+	
+	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logout(HttpServletRequest request){
+		HttpSession session = request.getSession(false);
+		session.removeAttribute("members");
+		session.removeAttribute("membersId");
+		session.removeAttribute("loginStatus");
+		request.getSession().setAttribute("loginStatus", "fail");
+		return "redirect:/";
 	}
 }

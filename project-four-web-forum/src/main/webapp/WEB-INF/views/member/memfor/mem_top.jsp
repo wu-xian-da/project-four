@@ -26,16 +26,25 @@
             <td></td>  
         </tr>   
     </table>   --%>
-	
 	<table width="100%">
 		<tr height="58px"></tr>
 		<tr>
-		<td><a href="${pageContext.request.contextPath}/forum/notes/${members.id}" target="mainFramemember">我的帖子</a></td>
-		<td><a href="${pageContext.request.contextPath}/member/members/${members.id}" target="mainFramemember">我的资料</a></td>
+		<td>
+		<a href="${pageContext.request.contextPath}/forum/notes/${members.id}" target="mainFramemember">我的帖子</a>
+		</td>
+		<td>
+		<a href="${pageContext.request.contextPath}/member/members/${members.id}" target="mainFramemember">我的资料</a>
+		</td>
 		<!-- <td><a href="#" target="mainFramemember">我的评论</a></td>
 		<td><a href="#" target="mainFramemember">我的动态</a></td> -->
-		<td><a href="${pageContext.request.contextPath}/forum/notes/insert" target="mainFramemember">发帖</a></td>
+		<td>
+		<a href="${pageContext.request.contextPath}/forum/notes/insert" target="mainFramemember">发帖</a>
+		</td>
+		<td align="right">
+		<a href="${pageContext.request.contextPath}/member/members/logout" target="_parent" id="logout">退出</a>
+		</td>
 		</tr>
 	</table>
 </body>
 </html>
+

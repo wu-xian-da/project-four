@@ -5,9 +5,12 @@
   */
 package com.jianfei.pf.controller.member;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,11 +68,19 @@ public class MembersController {
 	 * @param id
 	 * @param model
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public String findMembers(@PathVariable("id")int id,Model model){
-		model.addAttribute("memberslist",membersService.findById(id));
-		return "member/members/list";
+	public String findMembers(@PathVariable("id")int id,Model model,HttpServletRequest request){
+		String loginStatus = (String) request.getSession().getAttribute("loginStatus");
+		if (loginStatus == "success") {
+			model.addAttribute("memberslist",membersService.findById(id));
+
+			return "member/members/list";
+		} else {
+			return "fail";
+		}
+		
 	}
 	
 	/**
@@ -79,9 +90,27 @@ public class MembersController {
 	 * @return
 	 */
 	@RequestMapping
-	public String list(Model model,HttpServletRequest request){
-		List<Notes> notes = notesService.findNotesByMembersId(Integer.parseInt((String) request.getSession().getAttribute("membersId")));
-		request.getSession().setAttribute("notes", notes);
-		return "member/memfor/mem_main";
+	public String list(Model model,HttpServletRequest request,HttpServletResponse response) throws IOException{
+		String loginStatus = (String) request.getSession().getAttribute("loginStatus");
+		
+		if (loginStatus == "success") {
+			List<Notes> notes = notesService.findNotesByMembersId(Integer.parseInt((String) request.getSession().getAttribute("membersId")));
+			request.getSession().setAttribute("notes", notes);
+			
+			return "member/memfor/mem_main";
+		} else {
+			return "redirect:/";
+		}
+		
+	}
+	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logout(HttpServletRequest request){
+		//HttpSession session = request.getSession(false);
+		//session.removeAttribute("members");
+		//session.removeAttribute("membersId");
+		//session.removeAttribute("loginStatus");
+		request.getSession().setAttribute("loginStatus", "fail");
+		return "redirect:/";
 	}
 }

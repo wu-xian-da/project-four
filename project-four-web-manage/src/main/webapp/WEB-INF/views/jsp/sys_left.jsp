@@ -16,7 +16,10 @@ String roleid = request.getParameter("roleid");//用request得到
 		text-align: center;
 		font-size: 25px;
 	}
-	
+	#line{
+		text-align: center;
+		font-size: 25px;
+	}
 </style>
 
 </head>
@@ -46,6 +49,7 @@ String roleid = request.getParameter("roleid");//用request得到
 			</dl>
 			</c:if>
 		</c:forEach>
+		<div id="line"><a href="${pageContext.request.contextPath}/system/users/logout" target="_parent">退出</a></div>
 	</div>
 	
 </div>

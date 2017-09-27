@@ -29,6 +29,20 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- 用户退出后拦截非法URL -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/member/members/logout"/>
+			<mvc:exclude-mapping path="/"/>
+			<!-- <mvc:exclude-mapping path="/ueditor/jsp/*"/> -->
+			<bean class="com.jianfei.pf.common.interceptor.LogoutInterceptor">
+				<!--定义拦截后重定向到默认的登录处理页面  
+            	<property name="defultLogin" value="/"/> -->
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
   
 	<!-- 对模型视图名称的解析,即在模型视图名称添加前后缀 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -37,4 +51,20 @@
 		<property name="suffix" value=".jsp"></property>
 		<property name="order" value="1" />
 	</bean>
+	
+	<!-- file upload-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 5M -->
+		<property name="maxUploadSize" value="52428800" />
+	</bean>
+	
+	<!-- servlet适配器，这里必须明确声明，因为spring默认没有初始化该适配器 -->
+	<bean id="servletHandlerAdapter"
+		class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter" />
+
+	<!-- 会自动注册RequestMappingHandlerMapping与RequestMappingHandlerAdapter 两个bean,是spring 
+		MVC为@Controllers分发请求所必须的。 并提供了：数据绑定支持，@NumberFormatannotation支持，
+		@DateTimeFormat支持，@Valid支持，读写XML的支持（JAXB），读写JSON的支持（Jackson） -->
+	<mvc:annotation-driven />
 </beans>

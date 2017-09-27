@@ -1,10 +1,10 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/Validate_sys.js"></script>
-<table width="1200px;" style="font-size: 8px;" class="td" border="1">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-2.0.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/vlidate.js"></script>
+<table width="100%" style="font-size: 8px;" class="td">
 	<tr>
-	<td align="left">共${totalRecord}条数据  | 每页面记录${page.pageSize}条数据</td>
+	<td align="left">共${totalRecord}条数据|每页面记录${page.pageSize}条数据</td>
 	<!-- 首页 -->
 	<td width="35px;"><a href="?pn=0&ps=${page.pageSize}">首页</a></td>
 	<!-- 上一页 -->
@@ -14,14 +14,13 @@
 	</a>
 	</td>
 	<!-- 页面的页数数字 -->
-	<td align="center" width="250px">
+	<td align="center">
 		<%-- <c:if test="${pageNo > 0}">
 		<c:forEach begin="0" end="${pageNo-1}" step="1" var="pageIndex">
 			<a <c:if test="${0 == pageIndex}">class="active"</c:if>
 			href="?pn=${pageIndex}&ps=${page.pageSize}">${pageIndex+1}</a>
 		</c:forEach>	
 		</c:if> --%>
-		
 		<c:choose>
 			<c:when test="${pageNo < 9}">
 				<c:set value="1" var="begin"></c:set>
@@ -56,7 +55,6 @@
       		<span>...</span>  
     	</c:if>
 	</td>
-	
 	<!-- 下一页 -->
 	<td width="50px;">
 	<a id="xiayiye" href="?pn=${bianPageXia}${jspurl}&ps=${page.pageSize}">
@@ -65,6 +63,7 @@
 	</td>
 	<!-- 末页 -->
 	<td width="35px;"><a href="?pn=${pageNo-1}&ps=${page.pageSize}">末页</a></td>
+	
 	<td width="180px">
 		共${pageNo}页 | 跳转
 		<input type="text" id="pageCode" style="width: 30px;"/> 页

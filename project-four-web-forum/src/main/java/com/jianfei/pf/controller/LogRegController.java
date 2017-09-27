@@ -16,8 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jianfei.pf.controller.common.PageController;
-import com.jianfei.pf.controller.common.TMBSelect;
+import com.jianfei.pf.common.PageController;
+import com.jianfei.pf.common.TMBSelect;
 import com.jianfei.pf.entity.forum.Notes;
 import com.jianfei.pf.entity.member.Members;
 import com.jianfei.pf.service.forum.ModulesService;
@@ -121,6 +121,7 @@ public class LogRegController {
 		if (members != null) {
 			request.getSession().setAttribute("membersId", String.valueOf(members.getId()));
 			request.getSession().setAttribute("members", members);
+			request.getSession().setAttribute("loginStatus", "success");
 			return "redirect:/member/members";
 		}
 		//response.sendRedirect("http://localhost:8888/log?error=fail");
