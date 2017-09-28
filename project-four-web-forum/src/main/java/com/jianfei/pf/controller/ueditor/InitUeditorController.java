@@ -17,22 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.baidu.ueditor.ActionEnter;
 
+
 @Controller
-@RequestMapping("/forum/notes")
 public class InitUeditorController {
 
 	private Logger logger = Logger.getLogger(InitUeditorController.class);
 	
-	@RequestMapping("/ueditor/init")
+	@RequestMapping("/forum/notes/ueditor/init")
 	public void initUeditor(HttpServletRequest request, HttpServletResponse response){
 		
 		response.setContentType("application/json");
 		
-		String rootPath = request.getSession().getServletContext().getRealPath("/resources");
+		String rootPath = request.getSession().getServletContext().getRealPath("/STATIC");
+		
 		PrintWriter writer = null;
 		try {
-			String exec = new ActionEnter(request,rootPath).exec();
-			System.out.println(exec+"===========");
+			String exec = new ActionEnter(request, rootPath).exec();
 			writer = response.getWriter();
 			writer.write(exec);
 			writer.flush();
@@ -44,4 +44,28 @@ public class InitUeditorController {
 			}
 		}
 	}
+	
+	@RequestMapping("/forum/notes/update/ueditor/init")
+	public void updateUeditor(HttpServletRequest request, HttpServletResponse response){
+		
+		response.setContentType("application/json");
+		
+		String rootPath = request.getSession().getServletContext().getRealPath("/STATIC");
+		
+		PrintWriter writer = null;
+		try {
+			String exec = new ActionEnter(request, rootPath).exec();
+			writer = response.getWriter();
+			writer.write(exec);
+			writer.flush();
+		} catch (IOException e) {
+			logger.error("百度编辑器初始化错误!",e);
+		}finally{
+			if (writer != null) {
+				writer.close();
+			}
+		}
+	}
+	
+	
 }

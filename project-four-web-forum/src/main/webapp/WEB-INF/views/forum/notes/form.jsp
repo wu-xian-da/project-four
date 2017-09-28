@@ -41,6 +41,7 @@
 			<td width= "100px;">文章内容：</td>
 			<td colspan="3" width= "1200px;">
 				<textarea id="editor" name="content">${forumnotes.content}</textarea>
+				
 				<input type="hidden" name="membersId" value="${membersId}">
 			</td>
 		</tr>
@@ -51,44 +52,16 @@
 	</table>
 	</form>
 </body>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/ueditor.all.js"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/STATIC/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/STATIC/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/STATIC/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/resources/js/jquery-2.0.0.js"></script>
 <script type="text/javascript">
-   var editor = UE.getEditor('editor');
-    
-   /*UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-    UE.Editor.prototype.getActionUrl = function(action){
-    	if (action == '/news/uploadZXImage') {
-			return '${pageContext.request.contextPath}/forum/notes/news/uploadZXImage';
-		} else {
-			return this._bkGetActionUrl.call(this,action);
-		}
-    } */
-    
-   /*  var _editor = UE.getEditor('upload_ue');
-    _editor.ready(function(){
-    	_editor.setDisabled();
-    	_editor.hide();
-    	_editor.addListener('beforeInsertImage',function(t,arg){
-    		$("#picture").attr("value",arg[0].src);
-    		$("#preview").attr("src",arg[0].src);
-    	});
-    	_editor.addListener('afterUpfile',function(t,tag){
-    		$("#file").attr("value",_editor.options.filePath+arg[0].url);
-    	});
-    });
-    
-    function upImage(){
-    	var myImage = _editor.getDialog("insertimage");
-    	myImage.open();
-    }
-    
-    function upFiles(){
-    	var myFiles = _editor.getDialog("attachment");
-    	myFiles.open();
-    }  */
+	//实例化编辑器
+	//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+	var ue = UE.getEditor('editor');
+	
 </script>
 <script language="javascript">
 	$(function(){

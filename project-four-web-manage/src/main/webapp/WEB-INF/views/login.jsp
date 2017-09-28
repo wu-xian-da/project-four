@@ -26,7 +26,7 @@
 
 	<div id="login_view">
 
-		<form method="post">
+		<form method="post" >
 
 			<table >
 

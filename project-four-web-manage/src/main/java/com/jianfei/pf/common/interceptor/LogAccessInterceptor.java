@@ -32,8 +32,8 @@ public class LogAccessInterceptor extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest request,HttpServletResponse response,Object handler,ModelAndView modelAndView) throws Exception{
 		String loginStatus = (String) request.getSession().getAttribute("loginStatus");
 		
-		if (loginStatus == "success") {
-			System.out.println(loginStatus);
+		if (loginStatus == "success" || request.getRequestURI() .equals("/")) {
+			//System.out.println(loginStatus);
 			try {
 				if (!request.getRequestURI() .equals("/log/access") && !request.getRequestURI() .equals("/") ) {
 					this.logAccessService.insert(new LogAccess((String)request.getSession().getAttribute("usernickname"),request.getRequestURI(),

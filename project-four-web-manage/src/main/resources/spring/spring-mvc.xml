@@ -36,7 +36,7 @@
 			<mvc:exclude-mapping path="/"/>
 			<mvc:exclude-mapping path="/system/users/logout"/>
 			<bean class="com.jianfei.pf.common.interceptor.LogAccessInterceptor">
-				<property name="defultLogin" value="/"></property>
+				<!-- <property name="defultLogin" value="/"></property> -->
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -55,4 +55,8 @@
 		<!-- 5M -->
 		<property name="maxUploadSize" value="52428800" />
 	</bean>
+	
+	<!-- servlet适配器，这里必须明确声明，因为spring默认没有初始化该适配器 -->
+	<bean id="servletHandlerAdapter"
+		class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter" />
 </beans>

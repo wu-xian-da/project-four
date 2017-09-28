@@ -49,9 +49,9 @@
 	</table>
 	</form>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ueditor/ueditor.all.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ueditor/zh-cn.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/statics/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/statics/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/statics/ueditor/zh-cn.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script type="text/javascript">
     UE.getEditor('ueditor');

@@ -61,6 +61,40 @@
         <url-pattern>/resources/*</url-pattern>  
     </servlet-mapping>
     
+    <!-- 配置对静态资源的处理 -->  
+   <servlet-mapping>  
+        <servlet-name>default</servlet-name>  
+        <url-pattern>/STATIC/ueditor/*</url-pattern>  
+    </servlet-mapping>
+  	
+  	<!-- <servlet>
+   		<servlet-name>static_two</servlet-name>
+  		<jsp-file>/STAT/ueditor/ueditor.config.js</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>static_two</servlet-name>
+   		<url-pattern>/ueditor.config.js</url-pattern>
+  	</servlet-mapping>
+  	
+  	 <servlet>
+   		<servlet-name>static_ueditor</servlet-name>
+  		<jsp-file>/STAT/ueditor/ueditor.all.js</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>static_ueditor</servlet-name>
+   		<url-pattern>/ueditor.all.js</url-pattern>
+  	</servlet-mapping>
+  	
+  	<servlet>
+   		<servlet-name>static_three</servlet-name>
+  		<jsp-file>/STAT/ueditor/lang/zh-cn/zh-cn.js</jsp-file>
+ 	</servlet>
+ 	<servlet-mapping>
+   		<servlet-name>static_three</servlet-name>
+   		<url-pattern>/lang/zh-cn/zh-cn.js</url-pattern>
+  	</servlet-mapping> -->
+    
+    
     <!-- 左侧导航静态资源访问 -->
     <servlet>
    		<servlet-name>gotoTOP</servlet-name>
