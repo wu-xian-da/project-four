@@ -45,4 +45,28 @@ public class InitUeditorController {
 			}
 		}
 	}
+	
+	@RequestMapping("/forum/modules/update/ueditor/init")
+	public void updateUeditor(HttpServletRequest request, HttpServletResponse response){
+		System.out.println(request.getRequestURL()+"++++++++");
+		response.setContentType("application/json");
+		
+		String rootPath = request.getSession().getServletContext().getRealPath("/statics");
+		System.out.println(rootPath+"--------========"+request.getContextPath()+"----");
+		PrintWriter writer = null;
+		try {
+			
+			String exec = new ActionEnter(request, rootPath).exec();
+			System.out.println(exec+"===========");
+			writer = response.getWriter();
+			writer.write(exec);
+			writer.flush();
+		} catch (IOException e) {
+			logger.error("百度编辑器初始化错误!",e);
+		}finally{
+			if (writer != null) {
+				writer.close();
+			}
+		}
+	}
 }

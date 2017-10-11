@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pf.common.PageController;
-import com.jianfei.pf.common.TMBSelect;
+import com.jianfei.pf.common.TMBSelects;
 import com.jianfei.pf.entity.forum.Notes;
 import com.jianfei.pf.entity.member.Members;
 import com.jianfei.pf.service.forum.ModulesService;
@@ -41,7 +41,7 @@ public class LogRegController {
 	protected PageController<Notes> pageController;
 	
 	@Autowired
-	private TMBSelect tmbSelect;
+	private TMBSelects tmbSelect;
 	
 	/***
 	 * 首页

@@ -6,6 +6,7 @@
 package com.jianfei.pf.controller.system;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,7 +86,7 @@ public class RolesController {
 		} else {
 			System.out.println("保存角色失败");
 		}
-		return "redirect:/system/roles?roleId="+request.getParameter("roleId");
+		return "redirect:/system/roles";
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
@@ -121,7 +122,7 @@ public class RolesController {
 			System.out.println("更新失败");
 			return "system/roles/form";
 		}
-		return "redirect:/system/roles?roleId="+request.getParameter("roleId");
+		return "redirect:/system/roles";
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
@@ -133,11 +134,11 @@ public class RolesController {
 			System.out.println("删除失败");
 			return "error/error";
 		}
-		return "redirect:/system/roles?roleId="+request.getParameter("roleId");
+		return "redirect:/system/roles";
 	}
 
 	@RequestMapping
-	public String list(Model model,Roles roles,HttpServletRequest request){
+	public String list(Model model,Roles roles,HttpServletRequest request,HttpServletResponse response){
 		//页面传输的pn,ps
 		pageController.setPNPS(model,roles);
 		
@@ -158,7 +159,7 @@ public class RolesController {
 		
 		this.setModel(model);
 		//查询按钮
-		tmbSelect.findbuttons(request, model);
+		tmbSelect.findbuttons(request, model, response);
 		
 		return "system/roles/list";
 	}

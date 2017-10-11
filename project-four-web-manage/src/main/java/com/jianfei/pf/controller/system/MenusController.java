@@ -6,6 +6,7 @@
 package com.jianfei.pf.controller.system;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class MenusController {
 		} 
 		
 		System.out.println("保存权限成功");
-		return "redirect:/system/menus?roleId="+request.getParameter("roleId");
+		return "redirect:/system/menus";
 	}
 
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
@@ -88,7 +89,7 @@ public class MenusController {
 			return "system/menus/form";
 		} 
 		System.out.println("修改权限成功");
-		return "redirect:/system/menus?roleId="+request.getParameter("roleId");
+		return "redirect:/system/menus";
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
@@ -100,11 +101,11 @@ public class MenusController {
 			System.out.println("删除失败");
 			return "error/error";
 		}
-		return "redirect:/system/menus?roleId="+request.getParameter("roleId");
+		return "redirect:/system/menus";
 	}
 	
 	@RequestMapping
-	public String list(Model model,Menus menus,HttpServletRequest request){
+	public String list(Model model,Menus menus,HttpServletRequest request,HttpServletResponse response){
 		//页面传输的pn,ps
 		pageController.setPNPS(model,menus);
 		
@@ -126,7 +127,7 @@ public class MenusController {
 		
 		this.setModel(model);
 		//查询按钮
-		tmbSelect.findbuttons(request, model);
+		tmbSelect.findbuttons(request, model,response);
 		
 		return "system/menus/list";
 	}

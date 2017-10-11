@@ -6,6 +6,7 @@
 package com.jianfei.pf.controller.log;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class LogLoginController {
 	private TMBSelect tmbSelect;
 	
 	@RequestMapping
-	public String list(Model model,LogLogin logLogin,HttpServletRequest request){
+	public String list(Model model,LogLogin logLogin,HttpServletRequest request,HttpServletResponse response){
 		//页面传输的pn,ps
 		pageController.setPNPS(model,logLogin);
 		
@@ -51,7 +52,7 @@ public class LogLoginController {
 		model.addAttribute("logLogin",this.logLoginService.findCondition(logLogin));
 		
 		//查询按钮
-		tmbSelect.findbuttons(request, model);
+		tmbSelect.findbuttons(request, model,response);
 		
 		return "log/logins";
 	}

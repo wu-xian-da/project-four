@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
@@ -47,16 +48,23 @@ public class TMBSelect extends BodyTagSupport{
 	 * @param request
 	 * @param model
 	 */
-	public void findbuttons(HttpServletRequest request,Model model){
+	public void findbuttons(HttpServletRequest request,Model model,HttpServletResponse response){
 		List<String> list = new ArrayList<String>();
-		
-		List<RoleMenu> rm = this.roleMenuService.findTMBMenusByRoles(Integer.parseInt((String) request.getSession().getAttribute("roleId")));
+		if (request.getSession().getAttribute("roleId") == null) {
+			try {
+				response.sendRedirect(request.getContextPath()+"/");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			List<RoleMenu> rm = this.roleMenuService.findTMBMenusByRoles(Integer.parseInt((String) request.getSession().getAttribute("roleId")));
 			Iterator<RoleMenu> it = rm.iterator();
 			while (it.hasNext()) {
 				RoleMenu roleMenu = (RoleMenu) it.next();
 				list.add(roleMenu.getRoleTMB().getPermission());
 			}
-		request.getSession().setAttribute("power_button", list);
+			request.getSession().setAttribute("power_button", list);
+		}
 	}
 	
 	

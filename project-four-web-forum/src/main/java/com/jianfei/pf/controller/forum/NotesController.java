@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pf.common.PageController;
-import com.jianfei.pf.common.TMBSelect;
+import com.jianfei.pf.common.TMBSelects;
 import com.jianfei.pf.entity.common.NoteStatus;
 import com.jianfei.pf.entity.forum.Modules;
 import com.jianfei.pf.entity.forum.Notes;
@@ -44,7 +44,7 @@ public class NotesController {
 	protected PageController<Notes> pageController;
 	
 	@Autowired
-	private TMBSelect tmbSelect;
+	private TMBSelects tmbSelect;
 
 	public void setModel(Model model){
 		model.addAttribute("status",NoteStatus.values());

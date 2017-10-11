@@ -8,6 +8,7 @@ package com.jianfei.pf.controller.system;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,7 @@ public class UsersController{
 			this.usersService.insertUserRoleId(user_role.getId(), roleId);
 		}
 		System.out.println("保存用户成功");
-		return "redirect:/system/users?roleId="+request.getParameter("roleId");
+		return "redirect:/system/users";
 	}
 	
 	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
@@ -116,7 +117,7 @@ public class UsersController{
 			System.out.println("更新失败");
 			return "error/error";
 		}
-		return "redirect:/system/users?roleId="+request.getParameter("roleId");
+		return "redirect:/system/users";
 	}
 	
 	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
@@ -129,12 +130,12 @@ public class UsersController{
 			System.out.println("删除失败");
 			return "error/error";
 		}
-		return "redirect:/system/users?roleId="+request.getParameter("roleId");
+		return "redirect:/system/users";
 	}
 
 	
 	@RequestMapping
-	public String list(Model model,Users users ,HttpServletRequest request){
+	public String list(Model model,Users users ,HttpServletRequest request,HttpServletResponse response){
 		//页面传输的pn,ps
 		pageController.setPNPS(model,users);
 		
@@ -157,7 +158,7 @@ public class UsersController{
 		
 		this.setModel(model);
 		//查询按钮
-		tmbSelect.findbuttons(request, model);
+		tmbSelect.findbuttons(request, model,response);
 		
 		return "system/users/list";
 	}

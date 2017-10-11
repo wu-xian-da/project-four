@@ -6,6 +6,7 @@
 package com.jianfei.pf.controller.log;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class LogAccessController {
 	private TMBSelect tmbSelect;
 	
 	@RequestMapping
-	public String list(Model model,LogAccess logAccess,HttpServletRequest request){
+	public String list(Model model,LogAccess logAccess,HttpServletRequest request,HttpServletResponse response){
 		
 		pageController.setPNPS(model,logAccess);
 		
@@ -51,7 +52,7 @@ public class LogAccessController {
 		model.addAttribute("logAccess",this.logAccessService.findCondition(logAccess));
 				
 		//查询按钮
-		tmbSelect.findbuttons(request, model);
+		tmbSelect.findbuttons(request, model,response);
 		return "log/access";
 	}
 }

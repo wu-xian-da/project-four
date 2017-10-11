@@ -23,7 +23,7 @@ import com.jianfei.pf.service.relation.RoleMenuService;
 import com.jianfei.pf.service.relation.UserRoleService;
 import com.jianfei.pf.service.system.UsersService;
 
-public class TMBSelect extends BodyTagSupport{
+public class TMBSelects extends BodyTagSupport{
 
 	@Autowired
 	private RoleMenuService roleMenuService;
@@ -47,7 +47,7 @@ public class TMBSelect extends BodyTagSupport{
 	 * @param request
 	 * @param model
 	 */
-	public void findbuttons(HttpServletRequest request,Model model){
+	/*public void findbuttons(HttpServletRequest request,Model model){
 		List<String> list = new ArrayList<String>();
 		
 		List<RoleMenu> rm = this.roleMenuService.findTMBMenusByRoles(Integer.parseInt(request.getParameter("roleId")));
@@ -57,7 +57,7 @@ public class TMBSelect extends BodyTagSupport{
 				list.add(roleMenu.getRoleTMB().getPermission());
 			}
 		request.getSession().setAttribute("power_button", list);
-	}
+	}*/
 	
 	
 	private String target;//设置标签内的属性

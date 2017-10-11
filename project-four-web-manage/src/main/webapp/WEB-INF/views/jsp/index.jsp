@@ -14,7 +14,7 @@
 </head>
 	<frameset rows="*" cols="*">
 		<frameset rows="*" cols="11%,*">
-			<frame src="http://localhost:8080/sys_left?roleid=${roleid}" noresize="noresize" />
+			<frame src="http://localhost:8080/sys_left" noresize="noresize" />
 			 
 			<frame src="http://localhost:8080/b_g?user=${user}"  name="mainFrame" class="bg-welcome" />
 		</frameset>
