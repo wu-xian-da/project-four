@@ -104,6 +104,7 @@
             }
 
             if(list) {
+            	editor.fireEvent('beforeinsertimage',list);//增加这句,不然无法触发事件
                 editor.execCommand('insertimage', list);
                 remote && editor.fireEvent("catchRemoteImage");
             }

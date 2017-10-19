@@ -84,19 +84,19 @@ public class LoginController {
 			} else if (users.getNickname().equals(user.getNickname()) && !users.getPassword().equals(user.getPassword())){
 				//登录日志添加
 				logLoginInterceptor.loginFial(request, status);
-				response.sendRedirect("http://localhost:8080?error2=password");
+				response.sendRedirect(request.getContextPath()+"?error2=password");
 				return "login";
 			} else {
 				//登录日志添加
 				logLoginInterceptor.loginFial(request, status);
-				response.sendRedirect("http://localhost:8080?error1=nickname");
+				response.sendRedirect(request.getContextPath()+"?error1=nickname");
 				return "login";
 			}
 		}else {
 			//登录日志添加
 			logLoginInterceptor.loginFial(request, status);
 			System.out.println("登录失败");
-			response.sendRedirect("http://localhost:8080?error3=fail");
+			response.sendRedirect(request.getContextPath()+"?error3=fail");
 			return "login";
 		}
 	}

@@ -3,8 +3,8 @@
 <mapper namespace="com.jianfei.pf.dao.forum.NotesDao">
 	
 	<insert id="insert">
-		insert into for_notes (theme,parent_modules,childs_modules,content,members_id) values 
-		(#{theme},#{parentmodules},#{childsmodules},#{content},#{membersId})
+		insert into for_notes (theme,parent_modules,childs_modules,content,members_id,upload_files) values 
+		(#{theme},#{parentmodules},#{childsmodules},#{content},#{membersId},#{uploadFiles})
 	</insert>
 	
 	<update id="update">
@@ -14,7 +14,8 @@
 		childs_modules = #{childsmodules},
 		content = #{content},
 		status = #{status},
-		releasetime = #{releasetime}
+		releasetime = #{releasetime},
+		upload_files = #{uploadFiles}
 		where id = #{id}
 	</update>
 	

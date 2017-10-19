@@ -25,7 +25,7 @@ public class InitUeditorController {
 	
 	@RequestMapping("/forum/notes/ueditor/init")
 	public void initUeditor(HttpServletRequest request, HttpServletResponse response){
-		
+		System.out.println("在线图片");
 		response.setContentType("application/json");
 		
 		String rootPath = request.getSession().getServletContext().getRealPath("/STATIC");
@@ -33,6 +33,8 @@ public class InitUeditorController {
 		PrintWriter writer = null;
 		try {
 			String exec = new ActionEnter(request, rootPath).exec();
+			System.out.println(exec+"==++");
+			request.getSession().setAttribute("exec", exec);
 			writer = response.getWriter();
 			writer.write(exec);
 			writer.flush();
@@ -55,6 +57,29 @@ public class InitUeditorController {
 		PrintWriter writer = null;
 		try {
 			String exec = new ActionEnter(request, rootPath).exec();
+			writer = response.getWriter();
+			writer.write(exec);
+			writer.flush();
+		} catch (IOException e) {
+			logger.error("百度编辑器初始化错误!",e);
+		}finally{
+			if (writer != null) {
+				writer.close();
+			}
+		}
+	}
+	
+	@RequestMapping("/member/members/update/ueditor/init")
+	public void uploadImage(HttpServletRequest request, HttpServletResponse response){
+		
+		response.setContentType("application/json");
+		
+		String rootPath = request.getSession().getServletContext().getRealPath("/STATIC");
+		
+		PrintWriter writer = null;
+		try {
+			String exec = new ActionEnter(request, rootPath).exec();
+			System.out.println(exec+"==++");
 			writer = response.getWriter();
 			writer.write(exec);
 			writer.flush();

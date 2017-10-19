@@ -1,21 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/include/common.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新增|编辑</title>
+<script type="text/javascript">
+	$().ready(function(){
+		$("#commitForm").validate();
+	});
+</script>
 </head>
 <body>
 	<h2>${empty entitymodules.id ? "新增" : "编辑" }模块</h2><hr/>
-	<form method="post">
+	<form method="post" id="commitForm">
 	<input type="hidden" id="entitymodulesId" name="id" value="${entitymodules.id}">
 	<table border="1">
-		<tr><td>模块名称:</td><td><input type="text" name="name" value="${entitymodules.name}"/></td></tr>
+		<tr><td>模块名称:</td><td><input type="text" name="name" value="${entitymodules.name}" required/></td></tr>
 		<tr>
 			<td valign="top">模块描述:</td>
-			<td><textarea id="ueditor" name="content" style="width: 1080px;height: 360px">${entitymodules.content}</textarea></td>
+			<td><textarea id="ueditor" name="content" style="width: 1080px;height: 360px" required>${entitymodules.content}</textarea></td>
 		</tr>
 		<tr>
 			<td>模块归属:</td>
@@ -57,6 +63,14 @@
     UE.getEditor('ueditor');
 </script>
 <script language="javascript">
+function Submit(){
+	var checksLen = $('input[type="checkbox"]:checked').length;
+	if(checksLen == 0){
+		alert("-请选择模块归属");
+		return;
+ 	}
+	$("#commitForm").submit();
+}
 $(function(){
 	$(".updatemodules").click(function(){
 		//var id = $(this).next(":hidden").val();

@@ -33,6 +33,8 @@ public class Notes extends BaseEntity{
 	
 	private Date releasetime;
 	
+	private String uploadFiles;
+	
 	private String beginCreateTime;//检索时间
     
     private String endCreateTime;//检索时间

@@ -91,6 +91,7 @@ public class BinaryUploader {
 				storageState.putInfo("url",  PathFormat.format(savePath));
 				storageState.putInfo("type", suffix);
 				storageState.putInfo("original", originFileName + suffix);
+				//request.getSession().setAttribute("FileName", originFileName + suffix);
 				if(conf.containsKey("myImageSavePath")){
 					storageState.putInfo("myImageSavePath", conf.get("myImageSavePath").toString());
 				}

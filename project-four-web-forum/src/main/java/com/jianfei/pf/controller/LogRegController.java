@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jianfei.pf.common.PageController;
 import com.jianfei.pf.common.TMBSelects;
+import com.jianfei.pf.entity.common.MemberStatus;
 import com.jianfei.pf.entity.forum.Notes;
 import com.jianfei.pf.entity.member.Members;
 import com.jianfei.pf.service.forum.ModulesService;
@@ -99,11 +100,20 @@ public class LogRegController {
 	 * @param account
 	 * @param password
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value="/Reg",method=RequestMethod.POST)
-	public String Reg(Model model,String account,String password){
-		membersService.insertMembers(account, password);
-		return "redirect:/log";
+	public String Reg(Model model,String account,String password,HttpServletResponse response,HttpServletRequest request) throws IOException{
+		Members members = membersService.findMembersByAccount(account, password);
+		if (members != null) {
+			System.out.println("用户已被注册,请重新输入");
+			response.sendRedirect(request.getContextPath()+"/reg?error=reg");
+			model.addAttribute("logreg","register");
+			return "logreg";
+		} else {
+			membersService.insertMembers(account, password);
+			return "redirect:/log";
+		}
 	}
 	
 	/***
@@ -118,13 +128,21 @@ public class LogRegController {
 	@RequestMapping(value="/Log",method=RequestMethod.POST)
 	public String Log(Model model,HttpServletRequest request,String account,String password,HttpServletResponse response) throws IOException{
 		Members members = membersService.findMembersByAccount(account, password);
-		if (members != null) {
+		if (members != null && members.getStatus().equals(MemberStatus.QY)) {
 			request.getSession().setAttribute("membersId", String.valueOf(members.getId()));
 			request.getSession().setAttribute("members", members);
 			request.getSession().setAttribute("loginStatus", "success");
 			return "redirect:/member/members";
+		}else if(members != null && members.getStatus().equals(MemberStatus.JY)){
+			System.out.println("用户已被禁用");
+			response.sendRedirect(request.getContextPath()+"/log?error=jy");
+			model.addAttribute("logreg","login");
+			return "logreg";
+		}else{
+			response.sendRedirect(request.getContextPath()+"/log?error=fail");
+			model.addAttribute("logreg","login");
+			return "logreg";
 		}
-		//response.sendRedirect("http://localhost:8888/log?error=fail");
-		return "redirect:/log";
+		
 	}
 }

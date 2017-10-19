@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="findMembersByAccount" resultType="com.jianfei.pf.entity.member.Members">
-		select * from mem_members where account = #{0} and password = #{1} and status = 0
+		select * from mem_members where account = #{0} and password = #{1}
 	</select>
 	
 	<select id="findAll" resultType="com.jianfei.pf.entity.member.Members">
