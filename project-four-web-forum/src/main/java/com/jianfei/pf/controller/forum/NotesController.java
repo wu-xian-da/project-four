@@ -23,12 +23,9 @@ import com.jianfei.pf.common.TMBSelects;
 import com.jianfei.pf.entity.common.NoteStatus;
 import com.jianfei.pf.entity.forum.Modules;
 import com.jianfei.pf.entity.forum.Notes;
-import com.jianfei.pf.entity.upload.FormList;
-import com.jianfei.pf.entity.upload.UploadFiles;
 import com.jianfei.pf.service.forum.ModulesService;
 import com.jianfei.pf.service.forum.NotesService;
 import com.jianfei.pf.service.member.MembersService;
-import com.jianfei.pf.service.upload.UploadFilesService;
 
 @Controller
 @RequestMapping("/forum/notes")
@@ -42,9 +39,6 @@ public class NotesController {
 	
 	@Autowired
 	private MembersService membersService;
-	
-	@Autowired
-	private UploadFilesService uploadFilesService;
 	
 	@Autowired
 	protected PageController<Notes> pageController;

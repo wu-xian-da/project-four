@@ -62,7 +62,10 @@
 				上传附件</a>
 				-->
 				
-				<button type="button" id="j_upload_file_btn">附件上传</button>
+				<%--
+				<c:if test="${upload_bzw_set == 0 }"><button type="button" id="j_upload_file_btn">附件上传</button></c:if>
+				<c:if test="${upload_bzw_set == 1 }"><button type="button" id="j_upload_file_btn">附件修改</button></c:if> --%>
+				<input type="button" id="j_upload_file_btn" value="附件上传">
 				<ul style="overflow:hidden;margin:0px;list-style-type:none;padding-left: 0px;"></ul>
 				<ul style="overflow:hidden;margin:0px;list-style-type:none;padding-left: 0px;" id="upload_file_wrap">${forumnotes.uploadFiles}</ul>
 				<textarea name="uploadFiles"  id="textarea_upload_file_wrap" style="display:none;"></textarea>
@@ -147,6 +150,7 @@
         //html = '',
         var me = this;
         function getFileIcons(url){
+        	//获取url . 之后的内容
             var ext = url.substr(url.lastIndexOf('.') + 1).toLowerCase(),
                 maps = {
                     "rar":"icon_rar.gif","zip":"icon_rar.gif","tar":"icon_rar.gif","gz":"icon_rar.gif","bz2":"icon_rar.gif",
@@ -177,6 +181,7 @@
             uploadfileHtml += '<li><img style="vertical-align: middle; margin-right: 2px;" src="'+ icon + '" _src="' + icon + '"/>' +
             '<a href="'+result[i].url+'" target="_blank">'+result[i].title+'</a></li>';
             
+            $("#j_upload_file_btn").attr("value","附件修改");
            
         }
         document.getElementById('upload_file_wrap').innerHTML = fileHtml;
