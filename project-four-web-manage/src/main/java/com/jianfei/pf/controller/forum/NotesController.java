@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class NotesController {
 	}
 
 	@RequestMapping
-	public String list(Notes notes,Model model){
+	public String list(Notes notes,Model model,HttpServletResponse response,HttpServletRequest request){
 		pageController.setPNPS(model, notes);
 		
 		if (notes.getTheme() == null && notes.getParentmodules() == 0 && notes.getChildsmodules() == 0 && notes.getMembersId() == 0 && notes.getBeginCreateTime() == null && notes.getEndCreateTime() == null) {
@@ -93,7 +94,8 @@ public class NotesController {
 			model.addAttribute("jspurl","&theme="+notes.getTheme()+"&parentmodules="+notes.getParentmodules()+"&childsmodules="+
 			notes.getChildsmodules()+"&membersId="+notes.getMembersId()+"&beginCreateTime="+notes.getBeginCreateTime()+"&endCreateTime="+notes.getEndCreateTime());
 		}
-		
+		//查询按钮
+		tmbSelect.findbuttons(request, model,response);
 		model.addAttribute("allnotes",notesService.findCondition(notes));
 		this.setModel(model);
 		return "forum/notes/list";

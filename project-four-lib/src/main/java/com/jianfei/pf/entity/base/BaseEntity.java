@@ -24,11 +24,11 @@ public class BaseEntity implements Serializable{
 	
 	private int pageNo;//页码
 	
-	public int pageSize = 5;//默认页展示记录数
+	public int pageSize = 25;//默认页展示记录数
 	
 	private long totalRecord;//总记录数
 	
-	public int ps = 5;//默认值
+	public int ps = 25;//默认值
 	
 	public int pn = 0;//默认值
 	

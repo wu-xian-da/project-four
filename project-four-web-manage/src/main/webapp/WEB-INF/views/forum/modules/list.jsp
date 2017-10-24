@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="p" uri="http://java.sun.com/jsp/jstl/power"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,9 +12,11 @@
 
 	<form method="post" action="${pageContext.request.contextPath}/forum/modules">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        
           <tr>
+          	<p:power target="modules:select">
           	<td width="100px">条件检索</td>
-            <td width="300px">模块:
+            <td width="300px">父模块:
             	<select name="parentId" style="width: 100px">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${modulesalllist}" var="m">
@@ -24,8 +27,11 @@
 				</select>
 			</td>
             <td align="right"><input  type="submit" value="查询" style="width:50px"/>&nbsp;&nbsp;</td>
+            </p:power>
+            <p:power target="modules:insert">
             <td align="right" width="30px"><a href="${pageContext.request.contextPath}/forum/modules/insert">
             <input  type="button" value="添加" style="width:50px"/></a></td>
+            </p:power>
           </tr>
         </table>
 
@@ -44,12 +50,16 @@
 			<td>${m.name}</td>
 			<td>${m.content}</td>
 			<td>
+			<p:power target="modules:update">
 			<a class="updatemodules" href="${pageContext.request.contextPath}/forum/modules/update/${m.id}">编辑</a>
 			<!-- hidden -->
 			<input type="hidden" value="${m.id}">
+			</p:power>
+			<p:power target="modules:delete">
 			<a href="${pageContext.request.contextPath}/forum/modules/delete/${m.id}" class="deletemodules">删除</a>
 			<!-- hidden -->
 			<input type="hidden" value="${m.name}">
+			</p:power>
 			</td>
 			
 		</tr>

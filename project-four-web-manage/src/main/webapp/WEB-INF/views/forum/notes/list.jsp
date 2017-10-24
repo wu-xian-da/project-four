@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="p" uri="http://java.sun.com/jsp/jstl/power"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,6 +12,7 @@
 <body>
 	<form method="post" action="${pageContext.request.contextPath}/forum/notes">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <p:power target="notes:select">
           <tr>
           	<td width="100px">条件检索</td>
             <td width="150px">标题:<input type="text" name="theme" style="width: 100px"/></td>
@@ -40,6 +42,7 @@
             <td align="left"><input type="text" name="endCreateTime" style="width: 100px" class="sang_Calender"/><script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/datetime.js"></script></td>
             <td align="right"><input  type="submit" value="查询" style="width:50px"/>&nbsp;&nbsp;</td>
           </tr>
+          </p:power>
         </table>
 
 	</form>
@@ -73,10 +76,14 @@
 			<td><fmt:formatDate value="${n.releasetime}" pattern="yyyy-MM-dd HH:mm" type="date"/></td>
 			<td>
 				<c:if test="${n.status eq 'YFB'}">
+				<p:power target="notes:changestatusWFB">
 				<a href="${pageContext.request.contextPath}/forum/notes/changestatusWFB/${n.id}">下刊</a>
+				</p:power>
 				</c:if>
 				<c:if test="${n.status eq 'WFB'}">
+				<p:power target="notes:changestatusYFB">
 				<a href="${pageContext.request.contextPath}/forum/notes/changestatusYFB/${n.id}">发布</a>
+				</p:power>
 				</c:if>
 			</td>
 		</tr>

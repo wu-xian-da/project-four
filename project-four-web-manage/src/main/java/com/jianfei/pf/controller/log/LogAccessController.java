@@ -53,6 +53,6 @@ public class LogAccessController {
 				
 		//查询按钮
 		tmbSelect.findbuttons(request, model,response);
-		return "log/access";
+		return "log/access/access";
 	}
 }

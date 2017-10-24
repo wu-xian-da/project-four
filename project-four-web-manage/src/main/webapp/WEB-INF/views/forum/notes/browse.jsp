@@ -27,6 +27,7 @@
 		</td>
 		</tr>
 		<tr><td>${notescontent.content}</td></tr>
+		<tr><td>附件:<ul style="overflow:hidden;margin:0px;list-style-type:none;padding-left: 0px;">${notescontent.uploadFiles}</ul></td></tr>
 		<tr><td align="center"><button type="button" onclick="javascript:history.back();">返回</button></td></tr>
 	
 	</table>

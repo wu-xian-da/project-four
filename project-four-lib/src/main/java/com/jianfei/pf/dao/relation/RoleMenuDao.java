@@ -28,4 +28,6 @@ public interface RoleMenuDao extends CrudDao<RoleMenu> {
 	 */
 	public List<RoleMenu> findTMBMenusByRoles(int roleId);
 	
+	public RoleMenu findByRoleIdAndMenuId(int roleId,int menusId);
+	
 }

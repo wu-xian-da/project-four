@@ -8,6 +8,7 @@ package com.jianfei.pf.controller.forum;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class ModulesController {
 	}
 	
 	@RequestMapping
-	public String list(Model model,Modules modules){
+	public String list(Model model,Modules modules,HttpServletRequest request,HttpServletResponse response){
 		pageController.setPNPS(model, modules);
 		if (modules.getParentId() == 0) {
 			//查询总记录条数
@@ -90,7 +91,8 @@ public class ModulesController {
 			
 			model.addAttribute("jspurl","&parentId="+modules.getParentId());
 		}
-		
+		//查询按钮
+		tmbSelect.findbuttons(request, model,response);
 		model.addAttribute("allmodules",modulesService.findCondition(modules));
 		this.setModel(model);
 		return "forum/modules/list";

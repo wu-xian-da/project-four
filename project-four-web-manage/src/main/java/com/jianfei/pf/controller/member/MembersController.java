@@ -5,6 +5,9 @@
   */
 package com.jianfei.pf.controller.member;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,7 +63,7 @@ public class MembersController {
 	}
 	
 	@RequestMapping
-	public String list(Model model,Members members){
+	public String list(Model model,Members members,HttpServletRequest request,HttpServletResponse response){
 		//页面传输的pn,ps
 		pageController.setPNPS(model,members);
 		
@@ -76,6 +79,9 @@ public class MembersController {
 			
 			model.addAttribute("jspurl","&account="+members.getAccount()+"&username="+members.getUsername());
 		}
+		
+		//查询按钮
+		tmbSelect.findbuttons(request, model,response);
 		model.addAttribute("allmembers",membersService.findCondition(members));
 		this.setModel(model);
 		return "member/members/list";

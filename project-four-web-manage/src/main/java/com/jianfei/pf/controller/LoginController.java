@@ -74,8 +74,13 @@ public class LoginController {
 				request.getSession().setAttribute("usernickname", users.getNickname());
 				request.getSession().setAttribute("roleId", String.valueOf(userRole.getRoleId()));
 				request.getSession().setAttribute("loginStatus", "success");
+				
 				//查询菜单
 				tmbSelect.findtmbname(request,userRole);
+				/* 
+				 * 查询按钮,将自定义标签放入session域中
+				 */
+				//tmbSelect.findbuttons(request, model,response);
 				
 				//登录日志添加
 				logLoginInterceptor.loginSuccess(request, status);

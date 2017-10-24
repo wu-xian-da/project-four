@@ -35,8 +35,8 @@
 			<td width="50px">序号</td>
 			<td width="100px">登录名</td>
 			<td >请求参数</td>
-			<td >IP</td>
-			<td >登录日期</td>
+			<td width="200px">IP</td>
+			<td width="200px">登录日期</td>
 		</tr>
 		<c:forEach items="${logAccess}" var="l" >
 		<tr>

@@ -37,4 +37,7 @@ public class RoleMenuService extends CrudService<RoleMenuDao, RoleMenu> {
 		return this.roleMenuDao.findTMBMenusByRoles(roleId);
 	}
 
+	public RoleMenu findByRoleIdAndMenuId(int roleId,int menusId){
+		return this.dao.findByRoleIdAndMenuId(roleId, menusId);
+	}
 }

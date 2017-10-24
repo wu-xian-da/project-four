@@ -64,6 +64,7 @@ public class TMBSelect extends BodyTagSupport{
 				list.add(roleMenu.getRoleTMB().getPermission());
 			}
 			request.getSession().setAttribute("power_button", list);
+			
 		}
 	}
 	

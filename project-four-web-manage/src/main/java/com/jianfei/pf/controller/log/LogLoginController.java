@@ -54,6 +54,6 @@ public class LogLoginController {
 		//查询按钮
 		tmbSelect.findbuttons(request, model,response);
 		
-		return "log/logins";
+		return "log/logins/logins";
 	}
 }

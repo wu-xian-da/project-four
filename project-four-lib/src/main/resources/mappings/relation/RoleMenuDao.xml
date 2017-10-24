@@ -52,4 +52,9 @@
 		select * from sys_menus m where m.id = #{menus_id}
 	</select>
 	
+	<!-- 根据角色id和权限id查询是否为null,判断权限是否存在 -->
+	<select id="findByRoleIdAndMenuId" resultType="com.jianfei.pf.entity.relation.RoleMenu">
+		select * from sys_role_menu where role_id = #{0} and menus_id = #{1}
+	</select>
+	
 </mapper>
